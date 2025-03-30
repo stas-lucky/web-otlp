@@ -39,15 +39,14 @@ public class WeatherController
     {
         // Create a new Activity scoped to the method
         using var activity = Metrics.GreeterActivitySource.StartActivity("GreeterActivity");
-
-        // Log a message
-        _logger.LogInformation("Sending greeting");
-
-        // Increment the custom counter
+        
+        _logger.LogInformation("Starting greeting");
+        
         Metrics.CountGreetings.Add(1);
-
-        // Add a tag to the Activity
         activity?.SetTag("greeting", "Hello World!");
+        
+        _logger.LogInformation("Greeting sent successfully");
+
 
         return "Hello World!";
     }
