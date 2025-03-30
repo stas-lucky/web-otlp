@@ -11,7 +11,7 @@
         "OTEL_SERVICE_NAME": "my-service-name",
         "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf",
         "OTEL_EXPORTER_OTLP_ENDPOINT": "https://api.honeycomb.io",
-        "OTEL_EXPORTER_OTLP_HEADERS": ""
+        "OTEL_EXPORTER_OTLP_HEADERS": "x-honeycomb-team="
       }
     },
     "https": {
@@ -24,7 +24,7 @@
         "OTEL_SERVICE_NAME": "my-service-name",
         "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf",
         "OTEL_EXPORTER_OTLP_ENDPOINT": "https://api.honeycomb.io",
-        "OTEL_EXPORTER_OTLP_HEADERS": ""
+        "OTEL_EXPORTER_OTLP_HEADERS": "x-honeycomb-team="
       }
     }
   }
