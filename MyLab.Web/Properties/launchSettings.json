@@ -8,7 +8,7 @@
       "applicationUrl": "http://localhost:5172",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "OTEL_SERVICE_NAME": "my-service-name",
+        "OTEL_SERVICE_NAME": "my-lab-web",
         "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf",
         "OTEL_EXPORTER_OTLP_ENDPOINT": "https://api.honeycomb.io",
         "OTEL_EXPORTER_OTLP_HEADERS": "x-honeycomb-team="
@@ -21,10 +21,10 @@
       "applicationUrl": "https://localhost:7143;http://localhost:5172",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "OTEL_SERVICE_NAME": "my-service-name",
+        "OTEL_SERVICE_NAME": "my-lab-web",
         "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf",
         "OTEL_EXPORTER_OTLP_ENDPOINT": "https://api.honeycomb.io",
-        "OTEL_EXPORTER_OTLP_HEADERS": "x-honeycomb-team="
+        "OTEL_EXPORTER_OTLP_HEADERS": "x-honeycomb-team=ZQesw03Jc4kjCfYvKbnTbA"
       }
     }
   }
