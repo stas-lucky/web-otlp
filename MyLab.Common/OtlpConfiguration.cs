@@ -1,41 +1,17 @@
-using MyLab.Web.OTLP;
-using OpenTelemetry;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using MyLab.Api.OTLP;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
-namespace MyLab.Web;
+namespace MyLab.Common;
 
-public class Program
+public class OtlpConfiguration
 {
-    public static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
-
-        builder.Services.AddControllers();
-        builder.Services.AddAuthorization();
-
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.Services.AddOpenApi();
-        AddOTLP(builder);
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.MapOpenApi();
-        }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-        app.MapControllers();
-
-
-        app.Run();
-    }
-
-    private static void AddOTLP(WebApplicationBuilder builder)
+     public static void AddOTLP(WebApplicationBuilder builder)
     {
         var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
         AddOtelLogs(builder, otlpEndpoint);
@@ -58,7 +34,9 @@ public class Program
                 };
             });            
             tracing.AddHttpClientInstrumentation();
-            tracing.AddSource(Metrics.GreeterActivitySource.Name);
+            // SQL
+            tracing.AddSource(OpenTelemetryCommon.GreeterActivitySource.Name);
+            tracing.AddSource(OpenTelemetryCommon.GreeterActivitySource2.Name);
             if (builder.Environment.IsDevelopment())
             {
                 tracing.AddConsoleExporter();
@@ -76,7 +54,7 @@ public class Program
         builder.Services.AddOpenTelemetry().WithMetrics(metrics =>
         {
             metrics.AddAspNetCoreInstrumentation();
-            metrics.AddMeter(Metrics.GreeterMeter.Name);
+            metrics.AddMeter(OpenTelemetryCommon.GreeterMeter.Name);
             metrics.AddMeter("Microsoft.AspNetCore.Hosting");
             metrics.AddMeter("Microsoft.AspNetCore.Server.Kestrel");
             if (otlpEndpoint != null)
@@ -101,8 +79,9 @@ public class Program
 
             if (otlpEndpoint != null)
             {
-                logging.AddOtlpExporter();
+                logging.AddOtlpExporter(); // OTEL_LOG_LEVEL=None
             }
         });
     }
 }
+

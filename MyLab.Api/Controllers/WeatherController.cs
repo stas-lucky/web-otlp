@@ -1,7 +1,9 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using MyLab.Web.OTLP;
+using MyLab.Api.OTLP;
+using MyLab.Common;
 
-namespace MyLab.Web.Controllers;
+namespace MyLab.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -35,15 +37,33 @@ public class WeatherController
         return forecast;
     }
     
-    async Task<string> SendGreeting()
+    [HttpGet("ex")]
+    public async Task<string> GetWithException()
+    {
+        await SendGreeting(true);
+        return "ERROR!";
+    }
+    
+    async Task<string> SendGreeting(bool throwException = false)
     {
         // Create a new Activity scoped to the method
-        using var activity = Metrics.GreeterActivitySource.StartActivity("GreeterActivity");
-        
+        using var activity = OpenTelemetryCommon.GreeterActivitySource.StartActivity("GreeterActivity");
+        using var activity2 = OpenTelemetryCommon.GreeterActivitySource2.StartActivity("GreeterActivity2");
+
         _logger.LogInformation("Starting greeting");
         
-        Metrics.CountGreetings.Add(1);
-        activity?.SetTag("greeting", "Hello World!");
+        OpenTelemetryCommon.CountGreetings.Add(1);
+        Activity.Current?.SetTag("greeting", "Hello World!");
+        if (throwException)
+        {
+            var ex = new Exception("Oops! Inside the span!");
+            Activity.Current?.AddException(ex, new TagList()
+            {
+                {"tag1key", "tag1value"}
+            });
+            Activity.Current?.SetStatus(ActivityStatusCode.Error);
+            throw ex;
+        }
         
         _logger.LogInformation("Greeting sent successfully");
 

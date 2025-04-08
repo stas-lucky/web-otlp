@@ -1,4 +1,4 @@
-namespace MyLab.Web;
+namespace MyLab.Api;
 
 public class WeatherForecast
 {

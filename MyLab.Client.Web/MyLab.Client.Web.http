@@ -1,0 +1,8 @@
+@MyLab.Client.Web_HostAddress = http://localhost:5293
+
+GET https://localhost:7110/test/
+Accept: application/json
+
+###
+GET https://localhost:7110/test/ex
+Accept: application/json

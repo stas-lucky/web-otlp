@@ -1,9 +1,9 @@
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 
-namespace MyLab.Web.OTLP;
+namespace MyLab.Api.OTLP;
 
-public class Metrics
+public class OpenTelemetryCommon
 {
     // Custom metrics for the application
     public static readonly Meter GreeterMeter = new Meter("OTel.Example", "1.0.0");
@@ -11,4 +11,5 @@ public class Metrics
 
     // Custom ActivitySource for the application
     public static readonly ActivitySource GreeterActivitySource = new ActivitySource("OTel.Example");
+    public static readonly ActivitySource GreeterActivitySource2 = new ActivitySource("OTel.Example2");
 }

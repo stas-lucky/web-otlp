@@ -1,0 +1,9 @@
+@MyLab.Web_HostAddress = http://localhost:5172
+
+GET https://localhost:7143/weather/
+Accept: application/json
+
+###
+
+GET https://localhost:7143/weather/ex
+Accept: application/json
